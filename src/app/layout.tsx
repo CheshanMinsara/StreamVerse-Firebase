@@ -8,6 +8,7 @@ import { Megaphone } from "lucide-react";
 export const metadata: Metadata = {
   title: "StreamVerse",
   description: "Your universe of free movies and TV series.",
+  icons: [],
 };
 
 export default function RootLayout({
