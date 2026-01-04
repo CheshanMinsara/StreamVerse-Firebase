@@ -1,8 +1,8 @@
-import { type Media } from "@/lib/data";
 import MediaCard from "./media-card";
+import { MediaResult } from "@/lib/types";
 
 interface CatalogProps {
-  media: Media[];
+  media: MediaResult[];
 }
 
 export default function Catalog({ media }: CatalogProps) {
@@ -19,7 +19,7 @@ export default function Catalog({ media }: CatalogProps) {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
-      {media.map((item, index) => (
+      {media.map((item) => (
         <MediaCard key={item.id} media={item} />
       ))}
     </div>

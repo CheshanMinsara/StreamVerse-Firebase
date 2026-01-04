@@ -6,16 +6,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 
 interface StreamPlayerProps {
   title: string;
+  mediaId: string;
+  mediaType: 'movie' | 'tv';
 }
 
-export default function StreamPlayer({ title }: StreamPlayerProps) {
+export default function StreamPlayer({ title, mediaId, mediaType }: StreamPlayerProps) {
+  const streamUrl = `https://vidsrc.to/embed/${mediaType}/${mediaId}`;
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -25,16 +28,15 @@ export default function StreamPlayer({ title }: StreamPlayerProps) {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[80vw] p-0 border-0 bg-black">
-        <div className="aspect-video w-full flex items-center justify-center bg-black rounded-lg overflow-hidden">
-            <div className="text-center text-white">
-                <Play className="h-16 w-16 mx-auto mb-4 text-accent animate-pulse" />
-                <DialogHeader>
-                <DialogTitle className="text-2xl font-headline text-white">Streaming {title}</DialogTitle>
-                <DialogDescription className="text-muted-foreground">
-                    Your content is playing.
-                </DialogDescription>
-                </DialogHeader>
-            </div>
+        <DialogHeader className="p-4">
+          <DialogTitle className="text-white">{title}</DialogTitle>
+        </DialogHeader>
+        <div className="aspect-video w-full">
+            <iframe
+              src={streamUrl}
+              allowFullScreen
+              className="w-full h-full"
+            ></iframe>
         </div>
       </DialogContent>
     </Dialog>

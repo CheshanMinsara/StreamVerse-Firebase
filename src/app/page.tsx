@@ -1,27 +1,29 @@
-"use client";
-
-import { useState, useMemo } from "react";
-import { mediaData, type Media } from "@/lib/data";
 import Catalog from "@/components/media/catalog";
 import Header from "@/components/layout/header";
+import { getTrending, searchMedia } from "@/lib/tmdb";
+import { MediaResult } from "@/lib/types";
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
+interface HomeProps {
+  searchParams: {
+    q?: string;
+  };
+}
 
-  const filteredMedia = useMemo(() => {
-    if (!searchQuery) {
-      return mediaData;
-    }
-    return mediaData.filter((item: Media) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery]);
+export default async function Home({ searchParams }: HomeProps) {
+  const searchQuery = searchParams.q || "";
+  let media: MediaResult[];
+
+  if (searchQuery) {
+    media = await searchMedia(searchQuery);
+  } else {
+    media = await getTrending();
+  }
 
   return (
     <>
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Header />
       <div className="container mx-auto px-4 py-8">
-        <Catalog media={filteredMedia} />
+        <Catalog media={media} />
       </div>
     </>
   );

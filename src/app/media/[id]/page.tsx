@@ -1,35 +1,43 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { mediaData } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import StreamPlayer from "@/components/media/stream-player";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { getMediaDetails, getImageUrl } from "@/lib/tmdb";
+import { Media } from "@/lib/types";
 
 interface MediaPageProps {
   params: {
     id: string;
   };
+  searchParams: {
+    type: 'movie' | 'tv';
+  }
 }
 
-export async function generateMetadata({ params }: MediaPageProps) {
-  const media = mediaData.find((item) => item.id === params.id);
+export async function generateMetadata({ params, searchParams }: MediaPageProps) {
+  const media = await getMediaDetails(params.id, searchParams.type);
   if (!media) {
     return { title: "Not Found" };
   }
+  const title = media.title || media.name;
   return {
-    title: `${media.title} | StreamVerse`,
-    description: media.description,
+    title: `${title} | StreamVerse`,
+    description: media.overview,
   };
 }
 
-export default function MediaPage({ params }: MediaPageProps) {
-  const media = mediaData.find((item) => item.id === params.id);
+export default async function MediaPage({ params, searchParams }: MediaPageProps) {
+  const media = await getMediaDetails(params.id, searchParams.type) as Media;
 
   if (!media) {
     notFound();
   }
+
+  const title = media.title || media.name || 'Untitled';
+  const typeLabel = searchParams.type === 'movie' ? 'Movie' : 'TV Show';
 
   return (
     <div className="min-h-screen">
@@ -42,35 +50,34 @@ export default function MediaPage({ params }: MediaPageProps) {
         </Button>
         <div className="grid md:grid-cols-3 lg:grid-cols-[1fr,2fr] gap-8 md:gap-12">
           <div className="aspect-[2/3] md:aspect-auto relative rounded-lg overflow-hidden shadow-2xl shadow-black/30">
-            <Image
-              src={media.posterUrl}
-              alt={`Poster for ${media.title}`}
-              width={500}
-              height={750}
-              className="w-full h-full object-cover"
-              data-ai-hint={media.posterHint}
-            />
+            {media.poster_path ? (
+              <Image
+                src={getImageUrl(media.poster_path)}
+                alt={`Poster for ${title}`}
+                width={500}
+                height={750}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-card flex items-center justify-center">
+                <span className="text-muted-foreground">No Poster</span>
+              </div>
+            )}
           </div>
           <div className="flex flex-col">
-            <Badge variant="outline" className="w-fit mb-4">{media.type}</Badge>
+            <Badge variant="outline" className="w-fit mb-4">{typeLabel}</Badge>
             <h1 className="font-headline text-4xl md:text-5xl font-bold mb-4">
-              {media.title}
+              {title}
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-prose">
-              {media.description}
+              {media.overview}
             </p>
             <div className="mt-auto flex gap-4">
-              <StreamPlayer title={media.title} />
+              <StreamPlayer title={title} mediaId={media.id.toString()} mediaType={searchParams.type} />
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  return mediaData.map((media) => ({
-    id: media.id,
-  }));
 }
