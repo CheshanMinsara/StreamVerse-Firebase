@@ -4,20 +4,19 @@ const API_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/";
 
 async function fetchFromTMDB<T>(endpoint: string, cache: RequestCache = 'force-cache'): Promise<T> {
-    const accessToken = process.env.TMDB_ACCESS_TOKEN;
+    const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
-    if (!accessToken) {
-        throw new Error("TMDB_ACCESS_TOKEN is not configured. Please add it to your .env.local file.");
+    if (!apiKey) {
+        throw new Error("NEXT_PUBLIC_TMDB_API_KEY is not configured. Please add it to your .env.local file.");
     }
     
-    const url = `${API_URL}/${endpoint}`;
+    const url = `${API_URL}/${endpoint}${endpoint.includes('?') ? '&' : '?'}api_key=${apiKey}`;
     
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json;charset=utf-8'
         },
-        cache: 'no-store' // Disabling cache for debugging purposes
+        cache: 'no-store'
     });
 
     if (!response.ok) {
