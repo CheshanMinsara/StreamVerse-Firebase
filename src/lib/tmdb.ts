@@ -2,14 +2,21 @@ import { Media, MediaResult, PaginatedResponse } from "./types";
 
 const API_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/";
-const API_KEY = process.env.TMDB_API_KEY;
+const ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN;
 
 async function fetchFromTMDB<T>(endpoint: string, cache: RequestCache = 'force-cache'): Promise<T> {
-    if (!API_KEY) {
-        throw new Error("TMDB_API_KEY is not configured in your .env.local file");
+    if (!ACCESS_TOKEN) {
+        throw new Error("TMDB_ACCESS_TOKEN is not configured in your .env.local file");
     }
-    const url = `${API_URL}/${endpoint}${endpoint.includes('?') ? '&' : '?'}api_key=${API_KEY}`;
-    const response = await fetch(url, { cache });
+    const url = `${API_URL}/${endpoint}`;
+    const response = await fetch(url, {
+        cache,
+        headers: {
+            'Authorization': `Bearer ${ACCESS_TOKEN}`,
+            'Content-Type': 'application/json;charset=utf-8'
+        }
+    });
+
     if (!response.ok) {
         console.error(`Failed to fetch from TMDB: ${response.statusText}`, await response.json());
         throw new Error(`Failed to fetch from TMDB: ${response.statusText}`);
@@ -41,9 +48,7 @@ export async function searchMedia(query: string, page: number = 1): Promise<Pagi
 }
 
 export async function getMediaDetails(id: string, type: 'movie' | 'tv'): Promise<Media> {
-    const endpoint = type === 'tv' 
-        ? `${type}/${id}?append_to_response=credits,videos`
-        : `${type}/${id}?append_to_response=credits,videos`;
+    const endpoint = `${type}/${id}?append_to_response=credits,videos`;
     return fetchFromTMDB<Media>(endpoint);
 }
 
