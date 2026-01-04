@@ -8,6 +8,7 @@ import { ArrowLeft, Star } from "lucide-react";
 import { getMediaDetails, getImageUrl } from "@/lib/tmdb";
 import { Media } from "@/lib/types";
 import Header from "@/components/layout/header";
+import EpisodeSelector from "@/components/media/episode-selector";
 
 interface MediaPageProps {
   params: {
@@ -89,8 +90,13 @@ export default async function MediaPage({ params, searchParams }: MediaPageProps
             <p className="text-lg text-muted-foreground mb-8 max-w-prose">
               {media.overview}
             </p>
-            <div className="mt-auto flex gap-4">
-              <StreamPlayer title={title} mediaId={media.id.toString()} mediaType={searchParams.type} />
+            <div className="mt-auto flex flex-col gap-4">
+              {searchParams.type === 'tv' && media.seasons && (
+                <EpisodeSelector mediaId={media.id.toString()} seasons={media.seasons} title={title} />
+              )}
+              {searchParams.type === 'movie' && (
+                <StreamPlayer title={title} mediaId={media.id.toString()} mediaType={searchParams.type} />
+              )}
             </div>
           </div>
         </div>

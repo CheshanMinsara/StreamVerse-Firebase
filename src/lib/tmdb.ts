@@ -38,8 +38,12 @@ export async function searchMedia(query: string, page: number = 1): Promise<Pagi
 }
 
 export async function getMediaDetails(id: string, type: 'movie' | 'tv'): Promise<Media> {
-    return fetchFromTMDB<Media>(`${type}/${id}?append_to_response=credits,videos`);
+    const endpoint = type === 'tv' 
+        ? `${type}/${id}?append_to_response=credits,videos`
+        : `${type}/${id}?append_to_response=credits,videos`;
+    return fetchFromTMDB<Media>(endpoint);
 }
+
 
 export function getImageUrl(path: string | null | undefined, size: string = 'w500'): string {
     if (!path) return '/placeholder.svg';

@@ -14,15 +14,21 @@ interface StreamPlayerProps {
   title: string;
   mediaId: string;
   mediaType: 'movie' | 'tv';
+  season?: number;
+  episode?: number;
 }
 
-export default function StreamPlayer({ title, mediaId, mediaType }: StreamPlayerProps) {
-  const streamUrl = `https://vidsrc.me/embed/${mediaType}?tmdb=${mediaId}`;
-  
+export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
+  let streamUrl = `https://vidsrc.cc/embed/${mediaType}?tmdb=${mediaId}`;
+
+  if (mediaType === 'tv' && season && episode) {
+    streamUrl += `&s=${season}&e=${episode}`;
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold">
+        <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold">
           <Play className="mr-2 h-5 w-5 fill-current" />
           Play
         </Button>

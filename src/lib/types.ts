@@ -28,4 +28,13 @@ export interface Media {
     genres: { id: number, name: string }[];
     release_date?: string;
     first_air_date?: string;
+    seasons?: {
+        air_date: string;
+        episode_count: number;
+        id: number;
+        name: string;
+        overview: string;
+        poster_path: string;
+        season_number: number;
+    }[];
 }
