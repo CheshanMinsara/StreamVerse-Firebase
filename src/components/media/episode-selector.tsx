@@ -27,8 +27,7 @@ export default function EpisodeSelector({ mediaId, seasons, title }: EpisodeSele
   const [selectedEpisode, setSelectedEpisode] = useState(1);
 
   const seasonDetails = seasons.find((s) => s.season_number === selectedSeason);
-  const episodeCount = seasonDetails?.episode_count || 0;
-
+  
   const handleSeasonChange = (seasonNumber: number) => {
     setSelectedSeason(seasonNumber);
     setSelectedEpisode(1);
@@ -77,7 +76,7 @@ export default function EpisodeSelector({ mediaId, seasons, title }: EpisodeSele
                   {Array.from({ length: season.episode_count }, (_, i) => i + 1).map((episode) => (
                       <Button
                         key={episode}
-                        variant={selectedEpisode === episode ? "default" : "outline"}
+                        variant={selectedEpisode === episode && selectedSeason === season.season_number ? "default" : "outline"}
                         onClick={() => setSelectedEpisode(episode)}
                         className="aspect-square"
                       >
