@@ -11,7 +11,7 @@ interface CatalogProps {
 }
 
 export default function Catalog({ media, title, href }: CatalogProps) {
-  if (media.length === 0) {
+  if (!media || !Array.isArray(media) || media.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-20">
         <h2 className="font-headline text-2xl mb-2">No Results Found</h2>
