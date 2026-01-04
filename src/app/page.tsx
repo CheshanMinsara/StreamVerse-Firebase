@@ -15,8 +15,8 @@ export default async function Home() {
       <div className="flex flex-col">
         <Hero media={heroMedia} />
         <div className="container mx-auto px-4 py-8 space-y-16">
-          <Catalog title="Popular Movies" media={popularMovies} href="/discover/movie"/>
-          <Catalog title="Popular TV Shows" media={popularTvShows} href="/discover/tv"/>
+          <Catalog title="Popular Movies" media={popularMovies.results} href="/discover/movie"/>
+          <Catalog title="Popular TV Shows" media={popularTvShows.results} href="/discover/tv"/>
         </div>
       </div>
     </>

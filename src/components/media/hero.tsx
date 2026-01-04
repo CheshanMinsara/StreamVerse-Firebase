@@ -30,7 +30,7 @@ export default function Hero({ media }: HeroProps) {
       className="relative w-full overflow-hidden"
     >
       <CarouselContent>
-        {media.map((item) => {
+        {media.map((item, index) => {
           const title = item.title || item.name;
           const backdropUrl = getImageUrl(item.backdrop_path, "original");
           const href = `/media/${item.id}?type=${item.media_type}`;
@@ -52,7 +52,7 @@ export default function Hero({ media }: HeroProps) {
                         alt={`Backdrop for ${title}`}
                         fill
                         className="object-cover object-center"
-                        priority={media.indexOf(item) === 0}
+                        priority={index === 0}
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -104,12 +104,6 @@ export default function Hero({ media }: HeroProps) {
           );
         })}
       </CarouselContent>
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 md:bottom-20">
-        <div className="flex gap-4">
-            <CarouselPrevious className="static translate-y-0 text-white hover:text-white bg-black/20 hover:bg-black/40 border-white/20"/>
-            <CarouselNext className="static translate-y-0 text-white hover:text-white bg-black/20 hover:bg-black/40 border-white/20"/>
-        </div>
-      </div>
     </Carousel>
   );
 }
