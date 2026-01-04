@@ -2,7 +2,7 @@ import { Media, MediaResult, PaginatedResponse } from "./types";
 
 const API_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/";
-const API_KEY = "cb1a8cbf4a56c7033534d989ce663559";
+const API_KEY = process.env.TMDB_API_KEY;
 
 async function fetchFromTMDB<T>(endpoint: string, cache: RequestCache = 'force-cache'): Promise<T> {
     if (!API_KEY) {
