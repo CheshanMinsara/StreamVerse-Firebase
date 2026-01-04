@@ -17,9 +17,7 @@ interface StreamPlayerProps {
 }
 
 export default function StreamPlayer({ title, mediaId, mediaType }: StreamPlayerProps) {
-  // Note: vidsrc.to might not be available in all regions. 
-  // You might need to use a different source or a VPN.
-  const streamUrl = `https://vidsrc.to/embed/${mediaType}/${mediaId}`;
+  const streamUrl = `https://vidsrc.me/embed/${mediaType}?tmdb=${mediaId}`;
   
   return (
     <Dialog>
