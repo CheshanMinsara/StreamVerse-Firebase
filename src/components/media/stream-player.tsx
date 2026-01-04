@@ -38,7 +38,7 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
           Play
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[80vw] p-0 border-0 bg-black">
+      <DialogContent className="sm:max-w-[70vw] p-0 border-0 bg-black">
         <DialogHeader className="p-4">
           <DialogTitle className="text-white">{title}</DialogTitle>
         </DialogHeader>
