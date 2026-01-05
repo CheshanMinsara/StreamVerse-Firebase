@@ -34,7 +34,7 @@ export function CastCarousel({ cast }: CastCarouselProps) {
           >
             <div className="flex flex-col items-center text-center">
               <Card className="overflow-hidden rounded-full w-20 h-20 md:w-24 md:h-24 mb-2 border-2 border-transparent hover:border-accent transition-colors">
-                <CardContent className="p-0">
+                <CardContent className="p-0 aspect-square">
                   <div className="relative w-full h-full">
                     {member.profile_path ? (
                       <Image
@@ -42,7 +42,7 @@ export function CastCarousel({ cast }: CastCarouselProps) {
                         alt={member.name}
                         fill
                         className="object-cover"
-                        sizes="96px"
+                        sizes="(max-width: 768px) 10vw, 8vw"
                       />
                     ) : (
                       <div className="w-full h-full bg-card flex items-center justify-center">
