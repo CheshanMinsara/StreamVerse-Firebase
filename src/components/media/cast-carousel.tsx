@@ -22,7 +22,7 @@ export function CastCarousel({ cast }: CastCarouselProps) {
     <Carousel
       opts={{
         align: 'start',
-        slidesToScroll: 3,
+        slidesToScroll: 5,
       }}
       className="w-full"
     >
@@ -30,7 +30,7 @@ export function CastCarousel({ cast }: CastCarouselProps) {
         {cast.map((member) => (
           <CarouselItem
             key={member.id}
-            className="basis-1/4 sm:basis-1/5 md:basis-1/6 lg:basis-1/8 xl:basis-1/10"
+            className="basis-1/5 sm:basis-1/6 md:basis-1/8 lg:basis-1/10 xl:basis-1/12"
           >
             <div className="flex flex-col items-center text-center">
               <Card className="overflow-hidden rounded-full w-20 h-20 md:w-24 md:h-24 mb-2 border-2 border-transparent hover:border-accent transition-colors">
