@@ -86,6 +86,11 @@ export default async function MediaPage({ params, searchParams }: MediaPageProps
               <h1 className="font-headline text-4xl md:text-5xl font-bold">
                 {title}
               </h1>
+              {media.tagline && (
+                <p className="text-lg text-muted-foreground italic mt-2">
+                  {media.tagline}
+                </p>
+              )}
               <div className="flex items-center gap-4 mt-2 mb-4 text-muted-foreground">
                   <span>{releaseYear}</span>
                   {media.vote_average > 0 && (

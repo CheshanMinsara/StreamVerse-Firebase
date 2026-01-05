@@ -29,6 +29,7 @@ export interface Media {
     title?: string;
     name?: string;
     overview: string;
+    tagline?: string;
     poster_path: string;
     backdrop_path: string;
     vote_average: number;
