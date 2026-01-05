@@ -17,6 +17,13 @@ export interface MediaResult {
     genre_ids: number[];
 }
 
+export interface CastMember {
+    id: number;
+    name: string;
+    character: string;
+    profile_path: string | null;
+}
+
 export interface Media {
     id: number;
     title?: string;
@@ -37,4 +44,7 @@ export interface Media {
         poster_path: string;
         season_number: number;
     }[];
+    credits?: {
+        cast: CastMember[];
+    }
 }

@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/layout/header";
 import "./globals.css";
-import Link from "next/link";
 import { Megaphone } from "lucide-react";
-import { CastCarousel } from "@/components/media/cast-carousel";
-import { Media } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "StreamVerse",

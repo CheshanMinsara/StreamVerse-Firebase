@@ -9,6 +9,7 @@ import { getMediaDetails, getImageUrl } from "@/lib/tmdb";
 import { Media } from "@/lib/types";
 import Header from "@/components/layout/header";
 import EpisodeSelector from "@/components/media/episode-selector";
+import { CastCarousel } from "@/components/media/cast-carousel";
 
 interface MediaPageProps {
   params: {
@@ -90,7 +91,15 @@ export default async function MediaPage({ params, searchParams }: MediaPageProps
             <p className="text-lg text-muted-foreground mb-8 max-w-prose">
               {media.overview}
             </p>
-            <div className="flex flex-col gap-4">
+            
+            {media.credits && media.credits.cast.length > 0 && (
+              <div className="mb-8">
+                <h2 className="font-headline text-2xl font-bold mb-4">Cast</h2>
+                <CastCarousel cast={media.credits.cast} />
+              </div>
+            )}
+
+            <div className="flex flex-col gap-4 mt-auto">
               {searchParams.type === 'tv' && media.seasons && (
                 <EpisodeSelector mediaId={media.id.toString()} seasons={media.seasons} title={title} />
               )}
