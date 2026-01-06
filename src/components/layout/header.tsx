@@ -113,7 +113,7 @@ export default function Header() {
         <div className="hidden md:flex flex-1 justify-center">
             <a href="mailto:cheshanminsara@gmail.com" className="group flex items-center gap-2">
                 <Megaphone className="h-5 w-5 text-yellow-500 group-hover:animate-pulse" />
-                <span className="text-sm font-semibold text-yellow-500/90 group-hover:text-yellow-500 transition-colors">For sale! Inquire now.</span>
+                <span className="text-sm font-semibold text-yellow-500/90 group-hover:text-yellow-500 transition-colors">For sale! Inquire at cheshanminsara@gmail.com</span>
             </a>
         </div>
 
