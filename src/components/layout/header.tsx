@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Film, Tv, Menu, X, Megaphone } from "lucide-react";
+import { Search, Film, Tv, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Clapperboard } from 'lucide-react';
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -14,6 +14,8 @@ import { searchMedia } from "@/lib/tmdb";
 import { MediaResult } from "@/lib/types";
 import SearchResultsDropdown from "../search/search-results-dropdown";
 import AnimatedSaleBanner from "./animated-sale-banner";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const navLinks = [
   { href: "/discover/movie", label: "Movies", icon: Film },
@@ -30,6 +32,7 @@ export default function Header() {
   const [results, setResults] = useState<MediaResult[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
 
   useEffect(() => {
@@ -118,14 +121,34 @@ export default function Header() {
         <div className="flex flex-1 items-center justify-end space-x-2 md:flex-none">
            <div className="w-full flex-1 md:w-auto md:flex-none" ref={searchRef}>
               <form onSubmit={handleSearchSubmit} className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
+                <motion.div
+                  className="absolute inset-0 rounded-md border"
+                  variants={{
+                    focused: {
+                      borderColor: "hsl(var(--accent))",
+                      boxShadow: "0 0 0 2px hsl(var(--accent) / 0.4)",
+                    },
+                    unfocused: {
+                      borderColor: "hsl(var(--input))",
+                      boxShadow: "0 0 0 0px hsl(var(--accent) / 0)",
+                    },
+                  }}
+                  initial="unfocused"
+                  animate={isSearchFocused ? "focused" : "unfocused"}
+                  transition={{ duration: 0.3 }}
+                />
                 <Input
                   type="search"
                   placeholder="Search movies and shows..."
-                  className="pl-9 w-full md:w-80"
+                  className="pl-9 w-full md:w-80 relative bg-transparent border-none focus:ring-0"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={() => setIsDropdownOpen(searchQuery.length > 0 && results.length > 0)}
+                  onFocus={() => {
+                    setIsSearchFocused(true);
+                    setIsDropdownOpen(searchQuery.length > 0 && results.length > 0);
+                  }}
+                  onBlur={() => setIsSearchFocused(false)}
                 />
                 {isDropdownOpen && results.length > 0 && (
                   <SearchResultsDropdown 
