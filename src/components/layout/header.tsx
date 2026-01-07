@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { searchMedia } from "@/lib/tmdb";
 import { MediaResult } from "@/lib/types";
 import SearchResultsDropdown from "../search/search-results-dropdown";
+import AnimatedSaleBanner from "./animated-sale-banner";
 
 const navLinks = [
   { href: "/discover/movie", label: "Movies", icon: Film },
@@ -111,10 +112,7 @@ export default function Header() {
         </div>
 
         <div className="hidden md:flex flex-1 justify-center">
-            <a href="mailto:cheshanminsara@gmail.com" className="group flex items-center gap-2">
-                <Megaphone className="h-5 w-5 text-yellow-500 group-hover:animate-pulse" />
-                <span className="text-sm font-semibold text-yellow-500/90 group-hover:text-yellow-500 transition-colors">For sale! Inquire at cheshanminsara@gmail.com</span>
-            </a>
+            <AnimatedSaleBanner />
         </div>
 
         <div className="flex flex-1 items-center justify-end space-x-2 md:flex-none">
