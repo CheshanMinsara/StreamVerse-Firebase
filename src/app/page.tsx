@@ -4,9 +4,12 @@ import { getTrending, getPopularMovies, getPopularTvShows } from "@/lib/tmdb";
 import Hero from "@/components/media/hero";
 
 export default async function Home() {
-  const trending = await getTrending('day');
-  const popularMovies = await getPopularMovies();
-  const popularTvShows = await getPopularTvShows();
+  const [trending, popularMovies, popularTvShows] = await Promise.all([
+    getTrending('day'),
+    getPopularMovies(),
+    getPopularTvShows()
+  ]);
+  
   const heroMedia = trending.slice(0, 5);
 
   return (
