@@ -22,16 +22,18 @@ interface StreamPlayerProps {
 
 export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
   let streamUrl: string;
-  const downloadSearchQuery = encodeURIComponent(`${title} download`);
-  const downloadUrl = `https://www.google.com/search?q=${downloadSearchQuery}`;
+  let downloadUrl: string;
 
   if (mediaType === 'tv') {
     streamUrl = `https://vidsrc.cc/v2/embed/tv/${mediaId}`;
+    downloadUrl = `https://dl.vidsrc.vip/tv/${mediaId}`;
     if (season && episode) {
       streamUrl += `/${season}/${episode}`;
+      downloadUrl += `/${season}/${episode}`;
     }
   } else {
     streamUrl = `https://vidsrc.cc/v2/embed/movie/${mediaId}`;
+    downloadUrl = `https://dl.vidsrc.vip/movie/${mediaId}`;
   }
 
   return (
