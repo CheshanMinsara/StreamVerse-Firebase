@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { cn } from "@/lib/utils";
+import DevToolsBlocker from "@/components/dev/devtools-blocker";
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -35,6 +36,7 @@ export default function RootLayout({
       <head>
       </head>
       <body className="font-body antialiased" suppressHydrationWarning>
+        <DevToolsBlocker />
         <div className="relative flex min-h-screen w-full flex-col">
           <main className="flex-1">{children}</main>
         </div>
