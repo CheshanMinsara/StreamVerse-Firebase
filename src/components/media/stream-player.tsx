@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -22,7 +21,7 @@ interface StreamPlayerProps {
 
 export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
   const streamDomain = "vidsrc.to/embed";
-  const downloadDomain = "vidsrc.to/download";
+  const downloadDomain = "dl.vidsrc.vip";
 
   let streamUrl: string;
   let downloadUrl: string;
