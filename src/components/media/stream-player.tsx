@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Download, Play } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 interface StreamPlayerProps {
   title: string;
@@ -22,20 +21,8 @@ interface StreamPlayerProps {
 }
 
 export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
-  const [streamDomain, setStreamDomain] = useState("vidsrc.cc/v2/embed");
-  const [downloadDomain, setDownloadDomain] = useState("dl.vidsrc.vip");
-
-  useEffect(() => {
-    try {
-      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (userTimezone === 'Asia/Singapore') {
-        setStreamDomain("vidsrc.to/embed");
-        setDownloadDomain("vidsrc.to/download");
-      }
-    } catch (error) {
-      console.error("Could not determine timezone:", error);
-    }
-  }, []);
+  const streamDomain = "vidsrc.to/embed";
+  const downloadDomain = "vidsrc.to/download";
 
   let streamUrl: string;
   let downloadUrl: string;
@@ -51,7 +38,6 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
     streamUrl = `https://${streamDomain}/movie/${mediaId}`;
     downloadUrl = `https://${downloadDomain}/movie/${mediaId}`;
   }
-
 
   return (
     <div className="flex flex-col sm:flex-row gap-4">
