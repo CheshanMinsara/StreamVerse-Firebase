@@ -53,7 +53,7 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
               <iframe
                 src={streamUrl}
                 allowFullScreen
-                referrerPolicy="origin"
+                referrerPolicy="no-referrer-when-downgrade"
                 className="w-full h-full"
               ></iframe>
           </div>
