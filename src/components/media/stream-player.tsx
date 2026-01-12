@@ -33,11 +33,7 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
   const getStreamUrl = () => {
     let url: string;
     if (selectedServer.url.includes('2embed.stream')) {
-      if (mediaType === 'tv' && season && episode) {
-        url = `${selectedServer.url}/iframe.php?id=${mediaId}&s=${season}&e=${episode}`;
-      } else {
         url = `${selectedServer.url}/iframe.php?id=${mediaId}`;
-      }
     } else { // For vidsrc.to and any other servers
       url = `${selectedServer.url}/embed/${mediaType}/${mediaId}`;
       if (mediaType === 'tv' && season && episode) {
@@ -81,7 +77,6 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
                     allowFullScreen
                     referrerPolicy="origin"
                     className="w-full h-full"
-                    sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                 ></iframe>
             ) : (
                 <div className="w-full h-full flex items-center justify-center bg-black text-white">
