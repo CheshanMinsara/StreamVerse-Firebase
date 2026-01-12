@@ -31,11 +31,14 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
   const [selectedServer, setSelectedServer] = useState(servers[0]);
 
   const getStreamUrl = () => {
-    let url: string;
-    if (selectedServer.url.includes('2embed.stream')) {
-        url = `${selectedServer.url}/iframe.php?id=${mediaId}`;
+    let url = selectedServer.url;
+    if (url.includes('2embed.stream')) {
+      url += `/embed/${mediaType}/${mediaId}`;
+      if (mediaType === 'tv' && season && episode) {
+        url += `/${season}/${episode}`;
+      }
     } else { // For vidsrc.to and any other servers
-      url = `${selectedServer.url}/embed/${mediaType}/${mediaId}`;
+      url += `/embed/${mediaType}/${mediaId}`;
       if (mediaType === 'tv' && season && episode) {
         url += `/${season}/${episode}`;
       }
