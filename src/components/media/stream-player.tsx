@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -31,11 +32,11 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
 
   const getStreamUrl = () => {
     let url: string;
-    if (selectedServer.url.includes('2embed')) {
+    if (selectedServer.url.includes('2embed.stream')) {
       if (mediaType === 'tv' && season && episode) {
-        url = `${selectedServer.url}/embed/tv/${mediaId}/${season}/${episode}`;
+        url = `${selectedServer.url}/iframe.php?id=${mediaId}&s=${season}&e=${episode}`;
       } else {
-        url = `${selectedServer.url}/embed/movie/${mediaId}`;
+        url = `${selectedServer.url}/iframe.php?id=${mediaId}`;
       }
     } else { // For vidsrc.to and any other servers
       url = `${selectedServer.url}/embed/${mediaType}/${mediaId}`;
