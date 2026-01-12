@@ -30,24 +30,17 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
   const [selectedServer, setSelectedServer] = useState(servers[0]);
 
   const getStreamUrl = () => {
-    if (selectedServer.url === "https://vidsrc.to") {
-      let url = `https://vidsrc.to/embed/${mediaType}/${mediaId}`;
-      if (mediaType === 'tv' && season && episode) {
-        url += `/${season}/${episode}`;
-      }
-      return url;
-    }
-    if (selectedServer.url === "https://www.2embed.stream") {
-        if (mediaType === 'movie') {
-            return `https://www.2embed.stream/2embed.php?id=${mediaId}`;
+    let url = `${selectedServer.url}/embed/${mediaType}/${mediaId}`;
+    if (mediaType === 'tv' && season && episode) {
+        if (selectedServer.url.includes('2embed')) {
+             // 2embed uses s= and e= for season and episode query params
+            url += `?s=${season}&e=${episode}`;
+        } else {
+            // vidsrc.to uses path-based season and episode
+            url += `/${season}/${episode}`;
         }
-        if (mediaType === 'tv' && season && episode) {
-            return `https://www.2embed.stream/tv-2embed.php?id=${mediaId}&season=${season}&episode=${episode}`;
-        }
-        // Fallback for TV show without season/episode
-        return `https://www.2embed.stream/tv-2embed.php?id=${mediaId}`;
     }
-    return "";
+    return url;
   };
 
   const downloadDomain = "dl.vidsrc.vip";
@@ -84,6 +77,7 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
                     allowFullScreen
                     referrerPolicy="origin"
                     className="w-full h-full"
+                    sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
                 ></iframe>
             ) : (
                 <div className="w-full h-full flex items-center justify-center bg-black text-white">
