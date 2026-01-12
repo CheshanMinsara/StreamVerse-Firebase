@@ -88,7 +88,7 @@ export default async function MediaPage({ params, searchParams }: MediaPageProps
                 {title}
               </h1>
               {media.tagline && <AnimatedTagline tagline={media.tagline} />}
-              <div className="flex items-center gap-4 mt-2 mb-4 text-muted-foreground">
+              <div className="flex items-center gap-4 mt-2 text-muted-foreground">
                   <span>{releaseYear}</span>
                   {media.vote_average > 0 && (
                       <>
@@ -100,6 +100,14 @@ export default async function MediaPage({ params, searchParams }: MediaPageProps
                       </div>
                       </>
                   )}
+              </div>
+
+              <div className="flex flex-wrap gap-2 my-4">
+                {media.genres.map((genre) => (
+                    <Badge key={genre.id} variant="secondary">
+                    {genre.name}
+                    </Badge>
+                ))}
               </div>
 
               <p className="text-lg text-muted-foreground mb-8 max-w-prose">
