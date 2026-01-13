@@ -23,8 +23,8 @@ interface StreamPlayerProps {
 }
 
 const servers = [
-    { name: "Server 1", url: "https://vidsrc.to" },
-    { name: "Server 2", url: "https://www.2embed.stream" }
+    { name: "Server 1", url: "https://www.2embed.stream" },
+    { name: "Server 2", url: "https://vidsrc.to" }
 ];
 
 export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
@@ -32,16 +32,9 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
 
   const getStreamUrl = () => {
     let url = selectedServer.url;
-    if (url.includes('2embed.stream')) {
-      url += `/embed/${mediaType}/${mediaId}`;
-      if (mediaType === 'tv' && season && episode) {
-        url += `/${season}/${episode}`;
-      }
-    } else { // For vidsrc.to and any other servers
-      url += `/embed/${mediaType}/${mediaId}`;
-      if (mediaType === 'tv' && season && episode) {
-        url += `/${season}/${episode}`;
-      }
+    url += `/embed/${mediaType}/${mediaId}`;
+    if (mediaType === 'tv' && season && episode) {
+      url += `/${season}/${episode}`;
     }
     return url;
   };
