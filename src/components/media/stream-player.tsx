@@ -13,6 +13,8 @@ import { Download, Play, Server } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Terminal } from "lucide-react";
 
 interface StreamPlayerProps {
   title: string;
@@ -23,8 +25,8 @@ interface StreamPlayerProps {
 }
 
 const servers = [
-    { name: "Server 1", url: "https://www.2embed.stream" },
-    { name: "Server 2", url: "https://vidsrc.to" }
+    { name: "Server 1", url: "https://vidfast.pro" },
+    { name: "Server 2", url: "https://www.2embed.stream" }
 ];
 
 export default function StreamPlayer({ title, mediaId, mediaType, season, episode }: StreamPlayerProps) {
@@ -32,9 +34,18 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
 
   const getStreamUrl = () => {
     let url = selectedServer.url;
-    url += `/embed/${mediaType}/${mediaId}`;
-    if (mediaType === 'tv' && season && episode) {
-      url += `/${season}/${episode}`;
+    
+    if (selectedServer.name === 'Server 1') { // vidfast.pro
+      if (mediaType === 'movie') {
+        url += `/movie/${mediaId}`;
+      } else if (mediaType === 'tv' && season && episode) {
+        url += `/tv/${mediaId}/${season}/${episode}`;
+      }
+    } else { // 2embed.stream
+      url += `/embed/${mediaType}/${mediaId}`;
+      if (mediaType === 'tv' && season && episode) {
+          url += `/${season}/${episode}`;
+      }
     }
     return url;
   };
@@ -75,8 +86,14 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
                     className="w-full h-full"
                 ></iframe>
             ) : (
-                <div className="w-full h-full flex items-center justify-center bg-black text-white">
-                    Select a server to play the video.
+                <div className="w-full h-full flex items-center justify-center bg-black text-white p-4">
+                    <Alert variant="destructive" className="bg-red-900/50 border-red-500/50 text-white">
+                        <Terminal className="h-4 w-4" />
+                        <AlertTitle>Playback Error</AlertTitle>
+                        <AlertDescription>
+                            There was an issue loading the video. Please try another server or check back later.
+                        </AlertDescription>
+                    </Alert>
                 </div>
             )}
           </div>
