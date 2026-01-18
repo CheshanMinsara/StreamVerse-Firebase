@@ -27,7 +27,7 @@ export default function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
-  const debouncedSearchQuery = useDebounce(searchQuery, 200);
+  const debouncedSearchQuery = useDebounce(searchQuery, 100);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [results, setResults] = useState<MediaResult[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
