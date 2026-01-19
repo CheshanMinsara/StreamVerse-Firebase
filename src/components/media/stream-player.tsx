@@ -53,7 +53,7 @@ export default function StreamPlayer({ title, mediaId, mediaType, season, episod
   const streamUrl = getStreamUrl();
   
   const getDownloadUrl = () => {
-    let url = "https://vidfast.pro"
+    let url = "https://dl.vidsrc.vip";
     if (mediaType === 'movie') {
       url += `/movie/${mediaId}`;
     } else if (mediaType === 'tv' && season && episode) {
